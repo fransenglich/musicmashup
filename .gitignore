@@ -2,3 +2,4 @@
 .gradle/
 build/
 src/.DS_Store
+bin/
