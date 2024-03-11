@@ -21,13 +21,14 @@ The problem of Cover Art Archive being slow, is solved by doing many requests at
 
 
 WIP
-1. get link to Wikidata via MusicBrainz 'type="wikidata"->url'
-2. Add fragments so it looks like this:
+1. Query MusicBrainz with the MBID to get list of albums.
+2. Get link to Wikidata via MusicBrainz 'type="wikidata"->url'
+3. Add fragments so it looks like this:
     https://www.wikidata.org/w/api.php?action=wbgetentities&ids=Q11649&format=json&props=sitelinks
 
-2. Query Wikidata to get "enwiki" and the "title"
-3. Construct URL to Wikipedia. For instance:
+4. Query Wikidata to get "enwiki" and the "title"
+5. Construct URL to Wikipedia. For instance:
     https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=true&redirects=true&titles=Nirvana_(band)
-4. Query Wikipedia
-5. Copy the result into your own return
+6. Query Wikipedia
+7. Copy the result into your own return
 
