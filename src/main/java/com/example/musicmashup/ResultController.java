@@ -6,8 +6,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ResultController {
-    @GetMapping("/greeting")
-    public OurQueryResult greeting(@RequestParam(value = "mbid") String mbid) {
+    /**
+     * The main entry point for Our REST interface. The returned structure is automatically marshalled by the Jackson framework.
+     *
+     * @param mbid The Music Brainz identifier (MBID) for the artist.
+     * @return A structure containing the artist information.
+     */
+    @GetMapping("/musicmashup")
+    public OurQueryResult musicmashup(@RequestParam(value = "mbid") String mbid) {
         String mbQuery = "https://musicbrainz.org/ws/2/artist/"
                        + mbid
                        + "?&fmt=json&inc=url-rels+release-groups";
