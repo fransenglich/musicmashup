@@ -1,3 +1,3 @@
 package com.example.musicmashup;
 
-public record OurQueryResult(String title, String mbid, OurResultAlbum[] albums) { }
+public record OurQueryResult(String mbid, OurResultAlbum[] albums) { }

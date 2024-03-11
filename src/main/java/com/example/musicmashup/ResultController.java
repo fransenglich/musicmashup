@@ -1,5 +1,7 @@
 package com.example.musicmashup;
 
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +20,12 @@ public class ResultController {
                        + mbid
                        + "?&fmt=json&inc=url-rels+release-groups";
 
+        RestTemplateBuilder builder = new RestTemplateBuilder();
+        RestTemplate restTemplate = builder.build();
+
+        MBReleaseGroups retval = restTemplate.getForObject(mbQuery, MBReleaseGroups.class);
+
+        OurResultAlbum[] albums = null;
 
         /*
         public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
@@ -27,6 +35,6 @@ public class ResultController {
 			log.info(quote.toString());
 		};
          */
-        return new OurQueryResult("Title", "mbid");
+        return new OurQueryResult(mbid, albums);
     }
 }
