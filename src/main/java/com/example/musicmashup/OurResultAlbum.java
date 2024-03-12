@@ -23,7 +23,7 @@ public record OurResultAlbum (String title, String id, String image) {
         ArrayList<OurResultAlbum> retval = new ArrayList<OurResultAlbum>(albums.size());
 
         for (MBAlbum album : albums) {
-            final String imageUrl = "https://coverartarchive.org/release/"
+            final String imageUrl = "https://coverartarchive.org/release-group/"
                                   + album.id()
                                   + "/front.jpg";
 

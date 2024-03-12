@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 public class ResultController {
@@ -15,7 +14,7 @@ public class ResultController {
      * The main entry point for Our REST interface. The returned
      * structure is automatically marshalled by the Jackson framework.
      *
-     * @param mbid The Music Brainz identifier (MBID) for the artist.
+     * @param mbid The MusicBrainz identifier (MBID) for the artist.
      * @return A structure containing the artist information.
      */
     @GetMapping("/musicmashup")
