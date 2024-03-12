@@ -42,7 +42,7 @@ After you've started the service, you can access it on your local host, such as 
 <http://localhost:8080/musicmashup?mbid=b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d>
 
 # WIP
-1. Query MusicBrainz with the MBID to get list of albums:
+1. DONE Query MusicBrainz with the MBID to get list of albums:
 
         https://musicbrainz.org/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?&fmt=json&inc=url-rels+release-groups
 

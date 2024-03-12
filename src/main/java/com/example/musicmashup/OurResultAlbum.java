@@ -20,7 +20,7 @@ public record OurResultAlbum (String title, String id, String image) {
      */
     public static ArrayList<OurResultAlbum>  from(List<MBAlbum> albums) {
         // We set the initial size to improve performance.
-        ArrayList<OurResultAlbum> retval = new ArrayList<OurResultAlbum>(albums.size());
+        ArrayList<OurResultAlbum> retval = new ArrayList<>(albums.size());
 
         for (MBAlbum album : albums) {
             final String imageUrl = "https://coverartarchive.org/release-group/"

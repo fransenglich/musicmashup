@@ -27,6 +27,7 @@ public class ResultController {
         RestTemplate restTemplate = builder.build();
 
         MBReleaseGroups retval = restTemplate.getForObject(mbQuery, MBReleaseGroups.class);
+        // TODO error handling.
         ArrayList<OurResultAlbum> albums = OurResultAlbum.from(retval.albums);
 
         return new OurQueryResult(mbid, albums);
