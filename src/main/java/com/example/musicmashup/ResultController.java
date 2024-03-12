@@ -29,7 +29,7 @@ public class ResultController {
         MBReleaseGroups retval = restTemplate.getForObject(mbQuery, MBReleaseGroups.class);
 
 
-        List<OurResultAlbum> albums = OurResultAlbum.from(retval.albums);
+        ArrayList<OurResultAlbum> albums = OurResultAlbum.from(retval.albums);
 
         /*
         public CommandLineRunner run(RestTemplate restTemplate) throws Exception {

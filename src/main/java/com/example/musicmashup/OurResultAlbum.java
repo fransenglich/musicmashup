@@ -18,7 +18,7 @@ public record OurResultAlbum (String title, String id, String image) {
      * @param albums The MusicBrainz data
      * @return Representation of what we need to return
      */
-    public static List<OurResultAlbum>  from(List<MBAlbum> albums) {
+    public static ArrayList<OurResultAlbum>  from(List<MBAlbum> albums) {
         // We set the initial size to improve performance.
         ArrayList<OurResultAlbum> retval = new ArrayList<OurResultAlbum>(albums.size());
 

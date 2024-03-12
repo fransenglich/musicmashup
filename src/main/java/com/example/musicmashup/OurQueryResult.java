@@ -1,6 +1,6 @@
 package com.example.musicmashup;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * A Java record for our JSON result.
@@ -9,4 +9,4 @@ import java.util.List;
  * @param mbid The MBID of the artist
  * @param albums A list of the artist's albums.
  */
-public record OurQueryResult(String mbid, List<OurResultAlbum> albums) { }
+public record OurQueryResult(String mbid, ArrayList<OurResultAlbum> albums) { }
