@@ -44,7 +44,7 @@ public class ResultController {
     String getWikiDescription(MBQueryReturn mbReturn) {
         final String wikiID = mbReturn.getWikiID();
 
-        final String wdURL = "https://www.wikidata.org/w/api.php?action=wbgetentities&&format=json&props=sitelinks?ids="
+        final String wdURL = "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=sitelinks?ids="
                             + wikiID;
 
         RestTemplateBuilder builder = new RestTemplateBuilder();
