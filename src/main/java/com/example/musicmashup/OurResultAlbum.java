@@ -19,12 +19,17 @@ public record OurResultAlbum (String title, String id, String image) {
      * @return Representation of what we need to return
      */
     public static List<OurResultAlbum>  from(List<MBAlbum> albums) {
-        ArrayList<OurResultAlbum> retval = new ArrayList<OurResultAlbum>();
+        // We set the initial size to improve performance.
+        ArrayList<OurResultAlbum> retval = new ArrayList<OurResultAlbum>(albums.size());
 
         for (MBAlbum album : albums) {
+            final String imageUrl = "https://coverartarchive.org/release/"
+                                  + album.id()
+                                  + "/front.jpg";
+
             retval.add(new OurResultAlbum(album.title(),
                                           album.id(),
-                                   "TODO construct image URL"));
+                                          imageUrl));
         }
 
         return retval;
