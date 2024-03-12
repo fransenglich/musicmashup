@@ -1,5 +1,8 @@
 package com.example.musicmashup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents an album by the requested artist.
  *
@@ -7,4 +10,21 @@ package com.example.musicmashup;
  * @param id The MBID of the album, not the artist
  * @param image the URL to the front cover of the album
  */
-public record OurResultAlbum (String title, String id, String image) {}
+public record OurResultAlbum (String title, String id, String image) {
+    /**
+     * TODO
+     * @param albums
+     * @return
+     */
+    public static List<OurResultAlbum>  from(List<MBAlbum> albums) {
+        ArrayList<OurResultAlbum> retval = new ArrayList<OurResultAlbum>();
+
+        for (MBAlbum album : albums) {
+            retval.add(new OurResultAlbum(album.title(),
+                                          album.id(),
+                                   "TODO construct image URL"));
+        }
+
+        return retval;
+    }
+}

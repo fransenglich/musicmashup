@@ -1,3 +1,5 @@
 package com.example.musicmashup;
 
-public record OurQueryResult(String mbid, OurResultAlbum[] albums) { }
+import java.util.List;
+
+public record OurQueryResult(String mbid, List<OurResultAlbum> albums) { }
