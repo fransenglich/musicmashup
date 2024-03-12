@@ -11,10 +11,12 @@ import java.util.List;
  * @param image the URL to the front cover of the album
  */
 public record OurResultAlbum (String title, String id, String image) {
+
     /**
-     * TODO
-     * @param albums
-     * @return
+     * Converts from MusicBrainz return to what we need to return.
+     *
+     * @param albums The MusicBrainz data
+     * @return Representation of what we need to return
      */
     public static List<OurResultAlbum>  from(List<MBAlbum> albums) {
         ArrayList<OurResultAlbum> retval = new ArrayList<OurResultAlbum>();
