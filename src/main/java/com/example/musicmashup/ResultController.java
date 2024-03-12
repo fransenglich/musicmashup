@@ -12,7 +12,8 @@ import java.util.List;
 @RestController
 public class ResultController {
     /**
-     * The main entry point for Our REST interface. The returned structure is automatically marshalled by the Jackson framework.
+     * The main entry point for Our REST interface. The returned
+     * structure is automatically marshalled by the Jackson framework.
      *
      * @param mbid The Music Brainz identifier (MBID) for the artist.
      * @return A structure containing the artist information.
@@ -27,18 +28,8 @@ public class ResultController {
         RestTemplate restTemplate = builder.build();
 
         MBReleaseGroups retval = restTemplate.getForObject(mbQuery, MBReleaseGroups.class);
-
-
         ArrayList<OurResultAlbum> albums = OurResultAlbum.from(retval.albums);
 
-        /*
-        public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
-		return args -> {
-			Quote quote = restTemplate.getForObject(
-					"http://localhost:8080/api/random", Quote.class);
-			log.info(quote.toString());
-		};
-         */
         return new OurQueryResult(mbid, albums);
     }
 }
