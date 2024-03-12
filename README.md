@@ -4,15 +4,17 @@ LINK
 
 This README contains aspects or issues not mentioned in the above link.
 
-# Known Issues
+# Known Topics
 
 * Wikipedia's API may return not well-formed or invalid HTML, which is conditions (bugs, in fact) that propagate into our own API.
 
 * What catches my attention is this in the case description:
 
-> The API should respond with all of the data as quickly as possible. This can be challenging because some of the external APIs can be slow.
+> The API should respond with all the data as quickly as possible. This can be challenging because some of the external APIs can be slow.
 
 My initial thought was that concurrent fetches would be needed, but that's not possible due to that all fetches are sequential. TODO
+
+* Relatively large images are served by the API. Cover Art Archive has smaller, but that's not necessarily of interest. Here's missing in the spec. If it's supposed to be thumbnails in some UI, smaller images are useful. However, if it's to be viewed as a display on a dashboard, larger images are better, as are served.
 
 Input: MBID
 Output: JSON that has:
@@ -23,11 +25,11 @@ Output: JSON that has:
         - id (MBID) (of album) - from MusicBrainz
         - image     - This URL can be constructed using the MBID
 
-The problem of Cover Art Archive being slow, is solved by doing many requests at the same time.
+FIXME The problem of Cover Art Archive being slow, is solved by doing many requests at the same time.
 
 # How to Build & Run
 
-This service is a Spring Boot and Gradle application, built on Java 17. Hence you can run it by:
+This service is a Spring Boot and Gradle application, built on Java 17. Hence, you can run it by:
 
 * Running the JAR file:
 

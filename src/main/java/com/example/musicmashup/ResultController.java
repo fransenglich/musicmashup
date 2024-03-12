@@ -26,9 +26,11 @@ public class ResultController {
         RestTemplateBuilder builder = new RestTemplateBuilder();
         RestTemplate restTemplate = builder.build();
 
-        MBReleaseGroups retval = restTemplate.getForObject(mbQuery, MBReleaseGroups.class);
+        MBQueryReturn retval = restTemplate.getForObject(mbQuery, MBQueryReturn.class);
         // TODO error handling.
         ArrayList<OurResultAlbum> albums = OurResultAlbum.from(retval.albums);
+
+        String wikiURL = retval.getWikiID();
 
         return new OurQueryResult(mbid, albums);
     }
