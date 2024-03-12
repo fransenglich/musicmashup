@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 /**
- * Mirrors the JSON from MusicBrainz.
+ * Mirrors the JSON from MusicBrainz (MB).
  * <br>
  * To study, GET the JSON and look at the output. All these small
  * records mirror the return, so no ingenious crafting of them.
@@ -31,7 +31,7 @@ public class MBQueryReturn {
                final String res = relation.url().resource();
                final int last = res.lastIndexOf("/");
 
-               final String substring = res.substring(last, -1);
+               final String substring = res.substring(last + 1, res.length());
                return substring;
            }
 

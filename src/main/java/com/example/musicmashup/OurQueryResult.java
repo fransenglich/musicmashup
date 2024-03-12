@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * It is the MBID followed by the list of albums.
  *
  * @param mbid The MBID of the artist
+ * @param description Wikipedia's description of the artist
  * @param albums A list of the artist's albums.
  */
-public record OurQueryResult(String mbid, ArrayList<OurResultAlbum> albums) { }
+public record OurQueryResult(String mbid, String description, ArrayList<OurResultAlbum> albums) { }

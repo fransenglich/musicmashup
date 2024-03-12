@@ -19,19 +19,39 @@ public class ResultController {
      */
     @GetMapping("/musicmashup")
     public OurQueryResult musicmashup(@RequestParam(value = "mbid") String mbid) {
-        String mbQuery = "https://musicbrainz.org/ws/2/artist/"
-                       + mbid
-                       + "?&fmt=json&inc=url-rels+release-groups";
+        String mbURL = "https://musicbrainz.org/ws/2/artist/"
+                + mbid
+                + "?&fmt=json&inc=url-rels+release-groups";
 
         RestTemplateBuilder builder = new RestTemplateBuilder();
         RestTemplate restTemplate = builder.build();
 
-        MBQueryReturn retval = restTemplate.getForObject(mbQuery, MBQueryReturn.class);
+        MBQueryReturn retval = restTemplate.getForObject(mbURL, MBQueryReturn.class);
         // TODO error handling.
         ArrayList<OurResultAlbum> albums = OurResultAlbum.from(retval.albums);
 
-        String wikiURL = retval.getWikiID();
+        String description = getWikiDescription(retval);
 
-        return new OurQueryResult(mbid, albums);
+        return new OurQueryResult(mbid, description, albums);
+    }
+
+    /**
+     * Does the second part, fetches from Wikipedia. First stop is Wikidata.
+     *
+     * @param mbReturn The data from MusicBrainz
+     * @return The HTML, potentially tag-soup, of Wikipedia's description of the artist.
+     */
+    String getWikiDescription(MBQueryReturn mbReturn) {
+        final String wikiID = mbReturn.getWikiID();
+
+        final String wdURL = "https://www.wikidata.org/w/api.php?action=wbgetentities&&format=json&props=sitelinks?ids="
+                            + wikiID;
+
+        RestTemplateBuilder builder = new RestTemplateBuilder();
+        RestTemplate restTemplate = builder.build();
+
+        WDQueryReturn retval = restTemplate.getForObject(wdURL, WDQueryReturn.class);
+
+        return "";
     }
 }
