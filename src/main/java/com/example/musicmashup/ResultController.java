@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 @RestController
@@ -17,6 +18,8 @@ public class ResultController {
     /**
      * The main entry point for Our REST interface. The returned
      * structure is automatically marshalled by the Jackson framework.
+     *
+     * TODO doc JavaNode/Jackson
      *
      * @param mbid The MusicBrainz identifier (MBID) for the artist.
      * @return A structure containing the artist information.
@@ -34,13 +37,23 @@ public class ResultController {
         // TODO error handling.
         ArrayList<OurResultAlbum> albums = OurResultAlbum.from(mbReturn.albums);
 
-        String wpLink = "";
+        URL wpURL = null;
         try {
-           wpLink = getLinkFromWikidata(mbReturn);
+           wpURL = getLinkFromWikidata(mbReturn);
         } catch (Exception e) {
         }
 
-        String description = extractFromWikipedia(wpLink);
+        System.out.println("wpURL:" + wpURL);
+        String description = "";
+
+        try {
+            description = extractFromWikipedia(wpURL);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+
+        System.out.println("Description:" + description);
 
         return new OurQueryResult(mbid, description, albums);
     }
@@ -51,7 +64,7 @@ public class ResultController {
      * @param mbReturn The data from MusicBrainz
      * @return The URL. For instance https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=true&redirects=true&titles=Nirvana_(band)
      */
-    String getLinkFromWikidata(MBQueryReturn mbReturn) throws IOException {
+    URL getLinkFromWikidata(MBQueryReturn mbReturn) throws IOException {
         final String wikiID = mbReturn.getWikiID();
 
         URL wdURL = null;
@@ -60,6 +73,7 @@ public class ResultController {
             wdURL = new URL("https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=sitelinks&ids="
                             + wikiID);
         } catch (Exception e) {
+            System.out.println(e);
         }
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -79,9 +93,9 @@ public class ResultController {
         // TODO: Edge case: Sometimes MusicBrainz will refer to Wikipedia directly.
 
         // TODO URL encode
-        return "https://en.wikipedia.org/w/api.php?action=query" +
-               "&format=json&prop=extracts&exintro=true&redirects=true&titles=" +
-               artistLinkTitle;
+        return new URL("https://en.wikipedia.org/w/api.php?action=query" +
+                       "&format=json&prop=extracts&exintro=true&redirects=true&titles=" +
+                       URLEncoder.encode(artistLinkTitle, "UTF-8"));
     }
 
     /**
@@ -90,7 +104,16 @@ public class ResultController {
      * @param url The URL to the Wikipedia API to query
      * @return The description of the artist in HTML
      */
-    String extractFromWikipedia(String url) {
-        return "";
+    String extractFromWikipedia(URL wpURL) throws IOException {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = objectMapper.readValue(wpURL, JsonNode.class);
+
+        // TODO Error handling
+      //  JsonNode entities = rootNode.get("entities");
+        JsonNode query = rootNode.get("query");
+        JsonNode pages = query.get("pages");
+        JsonNode actualPage = pages.elements().next();
+
+        return actualPage.get("extract").textValue();
     }
 }
