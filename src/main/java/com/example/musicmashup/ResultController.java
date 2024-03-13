@@ -30,28 +30,28 @@ public class ResultController {
         RestTemplateBuilder builder = new RestTemplateBuilder();
         RestTemplate restTemplate = builder.build();
 
-        MBQueryReturn retval = restTemplate.getForObject(mbURL, MBQueryReturn.class);
+        MBQueryReturn mbReturn = restTemplate.getForObject(mbURL, MBQueryReturn.class);
         // TODO error handling.
-        ArrayList<OurResultAlbum> albums = OurResultAlbum.from(retval.albums);
+        ArrayList<OurResultAlbum> albums = OurResultAlbum.from(mbReturn.albums);
 
+        String wpLink = "";
         try {
-            String description = getWikiDescription(retval);
-            return new OurQueryResult(mbid, description, albums);
-        }
-        catch (IOException e) {
-            // TODO
+           wpLink = getLinkFromWikidata(mbReturn);
+        } catch (Exception e) {
         }
 
-        return new OurQueryResult(mbid, "", albums);
+        String description = extractFromWikipedia(wpLink);
+
+        return new OurQueryResult(mbid, description, albums);
     }
 
     /**
-     * Does the second part, fetches from Wikipedia. First stop is Wikidata.
+     * Constructs the link to the Wikipedia API by fetching from Wikidata.
      *
      * @param mbReturn The data from MusicBrainz
-     * @return The HTML, potentially tag-soup, of Wikipedia's description of the artist.
+     * @return The URL. For instance https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=true&redirects=true&titles=Nirvana_(band)
      */
-    String getWikiDescription(MBQueryReturn mbReturn) throws IOException {
+    String getLinkFromWikidata(MBQueryReturn mbReturn) throws IOException {
         final String wikiID = mbReturn.getWikiID();
         System.out.println("wikiID: " + wikiID);
 
@@ -79,13 +79,15 @@ public class ResultController {
 
         final String artistLinkTitle = enwiki.get("title").textValue();
         System.out.println(artistLinkTitle);
-        // TODO: Edge case: Sometimes MusicBrainz will refer to Wikipedia directly. 
-                /*
-        RestTemplateBuilder builder = new RestTemplateBuilder();
-        RestTemplate restTemplate = builder.build();
+        // TODO: Edge case: Sometimes MusicBrainz will refer to Wikipedia directly.
 
-        WDQueryReturn retval = restTemplate.getForObject(wdURL, WDQueryReturn.class);
-*/
+        // TODO URL encode
+        return "https://en.wikipedia.org/w/api.php?action=query" +
+               "&format=json&prop=extracts&exintro=true&redirects=true&titles=" +
+               artistLinkTitle;
+    }
+
+    String extractFromWikipedia(String url) {
         return "";
     }
 }

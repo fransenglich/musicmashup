@@ -70,4 +70,4 @@ After you've started the service, you can access it on your local host, such as 
 TODO
 The Beatles: b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d
 https://spring.io/guides/gs/securing-web
-*
+* "You should be able to start the API directly from Maven/Gradle (for example by using Jetty and mvn jetty:run)"
