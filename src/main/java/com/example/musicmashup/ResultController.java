@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 @RestController
@@ -18,7 +19,6 @@ public class ResultController {
     /**
      * The main entry point for Our REST interface. The returned
      * structure is automatically marshalled by the Jackson framework.
-     *
      * TODO doc JavaNode/Jackson
      *
      * @param mbid The MusicBrainz identifier (MBID) for the artist.
@@ -95,13 +95,13 @@ public class ResultController {
         // TODO URL encode
         return new URL("https://en.wikipedia.org/w/api.php?action=query" +
                        "&format=json&prop=extracts&exintro=true&redirects=true&titles=" +
-                       URLEncoder.encode(artistLinkTitle, "UTF-8"));
+                       URLEncoder.encode(artistLinkTitle, StandardCharsets.UTF_8));
     }
 
     /**
      * Queries the Wikipedia API, parses the returned JSON, and returns the description.
      *
-     * @param url The URL to the Wikipedia API to query
+     * @param wpURL The URL to the Wikipedia API to query
      * @return The description of the artist in HTML
      */
     String extractFromWikipedia(URL wpURL) throws IOException {
