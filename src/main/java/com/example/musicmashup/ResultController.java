@@ -79,7 +79,7 @@ public class ResultController {
 
         final String artistLinkTitle = enwiki.get("title").textValue();
         System.out.println(artistLinkTitle);
-
+        // TODO: Edge case: Sometimes MusicBrainz will refer to Wikipedia directly. 
                 /*
         RestTemplateBuilder builder = new RestTemplateBuilder();
         RestTemplate restTemplate = builder.build();
