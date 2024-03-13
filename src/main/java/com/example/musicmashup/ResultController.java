@@ -53,7 +53,6 @@ public class ResultController {
      */
     String getLinkFromWikidata(MBQueryReturn mbReturn) throws IOException {
         final String wikiID = mbReturn.getWikiID();
-        System.out.println("wikiID: " + wikiID);
 
         URL wdURL = null;
 
@@ -69,16 +68,14 @@ public class ResultController {
         TODO document why we use JsonNode instead.
          */
         JsonNode rootNode = objectMapper.readValue(wdURL, JsonNode.class);
-       // System.out.println(jsonNode);
 
+        // TODO Error handling
         JsonNode entities = rootNode.get("entities");
         JsonNode entry = entities.get(wikiID);
-        System.out.println(entry);
         JsonNode sitelinks = entry.get("sitelinks");
         JsonNode enwiki = sitelinks.get("enwiki");
 
         final String artistLinkTitle = enwiki.get("title").textValue();
-        System.out.println(artistLinkTitle);
         // TODO: Edge case: Sometimes MusicBrainz will refer to Wikipedia directly.
 
         // TODO URL encode
@@ -87,6 +84,12 @@ public class ResultController {
                artistLinkTitle;
     }
 
+    /**
+     * Queries the Wikipedia API, parses the returned JSON, and returns the description.
+     *
+     * @param url The URL to the Wikipedia API to query
+     * @return The description of the artist in HTML
+     */
     String extractFromWikipedia(String url) {
         return "";
     }
