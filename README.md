@@ -16,6 +16,8 @@ My initial thought was that concurrent fetches would be needed, but that's not p
 
 * Relatively large images are served by the API. Cover Art Archive has smaller, but that's not necessarily of interest. Here's missing in the spec. If it's supposed to be thumbnails in some UI, smaller images are useful. However, if it's to be viewed as a display on a dashboard, larger images are better, as are served.
 
+* I find the code for marshalling from JSON cumbersome. However, I don't know a more convenient way.
+
 Input: MBID
 Output: JSON that has:
     * "mbid" - copied from input
@@ -43,6 +45,7 @@ After you've started the service, you can access it on your local host, such as 
 
 <http://localhost:8080/musicmashup?mbid=b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d>
 
+# 
 # WIP
 1. DONE Query MusicBrainz with the MBID to get list of albums:
 

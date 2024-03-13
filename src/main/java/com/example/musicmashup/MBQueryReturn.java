@@ -3,6 +3,10 @@ package com.example.musicmashup;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
+/* This seems to be the default setting, so it's not needed:
+@JsonIgnoreProperties(ignoreUnknown = true)
+*/
+
 /**
  * Mirrors the JSON from MusicBrainz (MB).
  * <br>
