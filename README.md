@@ -25,7 +25,7 @@ However, if CAA was queried, then parallelization would have been possible *and*
 
 The mashup service is not computationally expensive, because we're not using CPU cycles ourselves on anything heavy, and we mostly run in efficiently coded libraries, the marshalling done by Jackson and so on. What do consume *time* is waiting for the returns from the various services. Hence, parallelization through threading is not needed, but asynchronous fetching (which though typically uses threads) would allow multiple GET requests to be done, and hence reduce our query time.
 
-The async code would be implemented using Spring Boot's `@Async` applied to the function fetching the URL from CAA. The caller would 
+The async code would be implemented using Spring Boot's `@Async` applied to the function fetching the URL from CAA. The caller would TODO
 
 * Relatively large images are served by the API. CAA has smaller, but that's not necessarily of interest. Here's missing in the spec. If it's supposed to be thumbnails in some UI, smaller images are useful. However, if it's to be viewed as on display on a dashboard, larger images are better, and those are served.
 
