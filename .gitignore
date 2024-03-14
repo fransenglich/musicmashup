@@ -1,6 +1,5 @@
 .DS_Store
 .gradle/
-build/
 src/.DS_Store
 bin/
 *.swp

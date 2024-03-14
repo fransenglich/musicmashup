@@ -64,7 +64,7 @@ public class ResultController {
      * @param mbReturn The data from MusicBrainz
      * @return The URL. For instance https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=true&redirects=true&titles=Nirvana_(band)
      */
-    URL getLinkFromWikidata(MBQueryReturn mbReturn) throws IOException {
+    private URL getLinkFromWikidata(MBQueryReturn mbReturn) throws IOException {
         final String wikiID = mbReturn.getWikiID();
 
         URL wdURL = null;
@@ -104,7 +104,7 @@ public class ResultController {
      * @param wpURL The URL to the Wikipedia API to query
      * @return The description of the artist in HTML
      */
-    String extractFromWikipedia(URL wpURL) throws IOException {
+    private String extractFromWikipedia(URL wpURL) throws IOException {
         final ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readValue(wpURL, JsonNode.class);
 

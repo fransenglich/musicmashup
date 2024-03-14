@@ -1,0 +1,38 @@
+
+Input: MBID
+Output: JSON that has:
+    * "mbid" - copied from input
+    * "description" - from Wikipedia
+    * "album" that has:
+        - title     - from MusicBrainz
+        - id (MBID) (of album) - from MusicBrainz
+        - image     - This URL can be constructed using the MBID
+
+FIXME The problem of Cover Art Archive being slow, is solved by doing many requests at the same time.
+
+
+#
+# WIP
+1. DONE Query MusicBrainz with the MBID to get list of albums:
+
+        https://musicbrainz.org/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?&fmt=json&inc=url-rels+release-groups
+
+2. Get link to Wikidata via MusicBrainz 'type="wikidata"->url'
+
+3. Add fragments so it looks like this:
+
+        https://www.wikidata.org/w/api.php?action=wbgetentities&ids=Q11649&format=json&props=sitelinks
+
+4. Query Wikidata to get "enwiki" and the "title"
+
+5. Construct URL to Wikipedia. For instance:
+
+        https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=true&redirects=true&titles=Nirvana_(band)
+
+6. Query Wikipedia
+7. Copy the result into your own return
+8. Construct also album links & data into your own return.
+
+TODO
+The Beatles: b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d
+https://spring.io/guides/gs/securing-web
