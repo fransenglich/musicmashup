@@ -79,7 +79,8 @@ public class ResultController {
         ObjectMapper objectMapper = new ObjectMapper();
 
         /*
-        TODO document why we use JsonNode instead.
+        The node name in the returned JSON does in this case vary, it is the identifier. Handling
+        this is easier with JsonNOde, than Jackson's other marshalling.
          */
         JsonNode rootNode = objectMapper.readValue(wdURL, JsonNode.class);
 
