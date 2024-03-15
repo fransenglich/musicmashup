@@ -61,7 +61,6 @@ public class ResultController {
         } catch (Exception e) {
         }
 
-        System.out.println("wpURL:" + wpURL);
         String description = "";
 
         try {
@@ -70,8 +69,6 @@ public class ResultController {
         catch (Exception e) {
             System.out.println(e);
         }
-
-        System.out.println("Description:" + description);
 
         return new OurQueryResult(mbid, description, albums);
     }
@@ -111,7 +108,6 @@ public class ResultController {
         final String artistLinkTitle = enwiki.get("title").textValue();
         // TODO: Edge case: Sometimes MusicBrainz will refer to Wikipedia directly.
 
-        // TODO URL encode
         return new URL("https://en.wikipedia.org/w/api.php?action=query" +
                        "&format=json&prop=extracts&exintro=true&redirects=true&titles=" +
                        URLEncoder.encode(artistLinkTitle, StandardCharsets.UTF_8));
