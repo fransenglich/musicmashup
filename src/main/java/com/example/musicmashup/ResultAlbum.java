@@ -119,7 +119,7 @@ public class ResultAlbum {
             }
         }
         catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         // We now have written to imageURL or not. If it's
