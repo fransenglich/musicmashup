@@ -11,10 +11,6 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Represents an album by the requested artist.
- *
- * @param title The album title, such as "Bleach", without quotes
- * @param id The MBID of the album, not the artist
- * @param image the URL to the front cover of the album
  */
 public class ResultAlbum /*(String title, String mbid, String imageURL)*/ {
 
@@ -31,17 +27,34 @@ public class ResultAlbum /*(String title, String mbid, String imageURL)*/ {
      */
     URL m_imageURL;
 
+    /**
+     * Getter necessary for Jackson's marshalling.
+     */
     public String getMbid() {
         return m_mbid;
     }
 
+    /**
+     * Getter necessary for Jackson's marshalling.
+     */
     public String getTitle() {
         return m_title;
     }
+
+    /**
+     * Getter necessary for Jackson's marshalling.
+     */
     public URL getImageURL () {
         return m_imageURL;
     }
-    ResultAlbum(String title, String mbid /*, String image*/) {
+
+    /**
+     * Standard constructor.
+     *
+     * @param title The album title, such as "Bleach", without quotes
+     * @param mbid The MBID of the album, not the artist
+     */
+    ResultAlbum(String title, String mbid) {
         this.m_title = title;
         this.m_mbid = mbid;
         //this.image = image;
