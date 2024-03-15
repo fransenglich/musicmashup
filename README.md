@@ -15,6 +15,8 @@ What catches my attention is this in the case description:
 
 I don't know if this is a "trick question", because the case can be solved without querying Cover Art Archive (CAA). That is, it's possible to construct links to the cover art images in CAA without querying the JSON, and the first version I wrote did exactly that.
 
+CAA doesn't have rate limits. One GET request per query is done to MusicBrainz, Wikidata and Wikipedia. 
+
 However, because of the case description above, it seems as if you wanted to write some form of parallelism, so I rewrote the code to asynchronously fetch the JSON from CAA and use it to construct the links in the response. However, this is of course massively slower (N GET requests for N albums, compared to 0 requests), but it does demonstrate a bit of asynchronous code. Hence, the current version is not the fastest, but is perhaps better at what the case is actually about: judging my coding skills.
 
 It should be noticed that much can't be parallelized in the case. Our REST return partly depends on Wikipedia which in turn depends on Wikidata, which depends on MusicBrainz. It's not possible to parallelize these requests because of their innate dependencies.
@@ -35,7 +37,7 @@ I chose to do it in a simple manner, Java 8's CompletableFuture, essentially. Ho
 
 I've been on W3C's XQuery Test Task Force, and also hold an ISTQB certificate in testing.
 
-TODO
+black/white
 
 # Topics
 
