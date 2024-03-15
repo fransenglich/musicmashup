@@ -7,4 +7,5 @@ package com.example.musicmashup;
  * @param title the title of the album, for instance "Bleach"
  */
 public record MBAlbum(String id, String title) {
+
 }

@@ -36,3 +36,7 @@ FIXME The problem of Cover Art Archive being slow, is solved by doing many reque
 TODO
 The Beatles: b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d
 https://spring.io/guides/gs/securing-web
+
+* TODO Warnings/errors
+* Search for TODO, print, FIXME
+

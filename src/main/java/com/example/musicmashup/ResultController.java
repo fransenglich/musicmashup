@@ -33,9 +33,13 @@ public class ResultController {
         RestTemplateBuilder builder = new RestTemplateBuilder();
         RestTemplate restTemplate = builder.build();
 
+
         MBQueryReturn mbReturn = restTemplate.getForObject(mbURL, MBQueryReturn.class);
         // TODO error handling.
-        ArrayList<OurResultAlbum> albums = OurResultAlbum.from(mbReturn.albums);
+        ArrayList<ResultAlbum> albums = ResultAlbum.from(mbReturn.albums);
+
+        /* Now we proceed to extract from Wikipedia. First the link from Wikidata,
+         * then we fetch from Wikipedia. */
 
         URL wpURL = null;
         try {
