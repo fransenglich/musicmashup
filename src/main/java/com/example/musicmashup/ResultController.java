@@ -16,10 +16,21 @@ import java.util.ArrayList;
 
 @RestController
 public class ResultController {
+
+    /**
+     * Essentially a placeholder for error reporting.
+     */
+    OurQueryResult errorMessage(String mbid, String message) {
+        return new OurQueryResult(mbid, message, new ArrayList<ResultAlbum>());
+    }
+
     /**
      * The main entry point for Our REST interface. The returned
      * structure is automatically marshalled by the Jackson framework.
-     * TODO doc JavaNode/Jackson
+     *
+     * We use a combination of Jackson's automatic marshalling to Java structures,
+     * but also JsonNode. In one scenario JsonNode is more convenient. It might be
+     * one approach is faster/more efficient.
      *
      * @param mbid The MusicBrainz identifier (MBID) for the artist.
      * @return A structure containing the artist information.
@@ -35,7 +46,10 @@ public class ResultController {
 
 
         MBQueryReturn mbReturn = restTemplate.getForObject(mbURL, MBQueryReturn.class);
-        // TODO error handling.
+
+        if (mbReturn == null)
+            return errorMessage(mbid, "MusicBrainz have entry for MBID " + mbid);
+
         ArrayList<ResultAlbum> albums = ResultAlbum.from(mbReturn.albums);
 
         /* Now we proceed to extract from Wikipedia. First the link from Wikidata,
@@ -84,7 +98,7 @@ public class ResultController {
 
         /*
         The node name in the returned JSON does in this case vary, it is the identifier. Handling
-        this is easier with JsonNOde, than Jackson's other marshalling.
+        this is easier with JsonNode, than Jackson's other marshalling.
          */
         JsonNode rootNode = objectMapper.readValue(wdURL, JsonNode.class);
 

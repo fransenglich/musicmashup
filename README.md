@@ -7,25 +7,37 @@ This README has comments that are specific to this (Java) case.
 
 # Java Music Mashup
 
-# Known Issues
-
-* Wikipedia's API may return not well-formed or invalid HTML, which is conditions (bugs, in fact) that propagate into our own API. It needs be documented, it could be a sensible design choice to pass it through the API
-
 # On concurrency
 
 What catches my attention is this in the case description:
 
 > The API should respond with all of the data as quickly as possible. This can be challenging because some of the external APIs can be slow. Some of them even enforce rate limits.
 
-I don't know if this is a "trick question", because the case can be solved without querying Cover Art Archive (CAA). On one hand the case is solved in an efficient manner, but parallelized/asynchronous code is more complex, and I hence don't demonstrate that in particular. On the other hand I have plenty of other complex code demonstrated. No matter what, here's how I solved it, as well as discussion of the problem:
+I don't know if this is a "trick question", because the case can be solved without querying Cover Art Archive (CAA). That is, it's possible to construct links to the cover art images in CAA without querying the JSON, and the first version I wrote did exactly that.
 
-The current implementation has no noticeable performance drawback, all depending on requirements of course. Our REST return partly depends on Wikipedia which in turn depends on Wikidata, which depends on MusicBrainz. It's not possible to parallelize these requests because of their innate dependencies. In short, it's possible to construct URLs to images at CAA without querying the service.
+However, because of the case description above, it seems as if you wanted to write some form of parallelism, so I rewrote the code to asynchronously fetch the JSON from CAA and use it to construct the links in the response. However, this is of course massively slower (N GET requests for N albums, compared to 0 requests), but it does demonstrate a bit of asynchronous code. Hence, the current version is not the fastest, but is perhaps better at what the case is actually about: judging my coding skills.
 
-However, if CAA was queried, then parallelization would have been possible *and* make sense. Doing one GET request sequentially per album is very time costly, compared to a parallelized approach. I believe the implementation is complete, but I here discuss how to code if CAA had to be queried.
+It should be noticed that much can't be parallelized in the case. Our REST return partly depends on Wikipedia which in turn depends on Wikidata, which depends on MusicBrainz. It's not possible to parallelize these requests because of their innate dependencies.
 
-The mashup service is not computationally expensive, because we're not using CPU cycles ourselves on anything heavy, and we mostly run in efficiently coded libraries, the marshalling done by Jackson and so on. What do consume *time* is waiting for the returns from the various services. Hence, parallelization through threading is not needed, but asynchronous fetching (which though typically uses threads) would allow multiple GET requests to be done, and hence reduce our query time.
+The mashup service is not computationally expensive, because we're not using CPU cycles ourselves on anything heavy, and we mostly run in efficiently coded libraries, the marshalling done by Jackson and so on. What do consume *time* is waiting for the returns from the various services.
 
-The async code would be implemented using Spring Boot's `@Async` applied to the function fetching the URL from CAA. The caller would TODO
+I chose to do it in a simple manner, Java 8's CompletableFuture, essentially. However, there are many modern libraries out there for threading/async (such as EA Async), and I chose to keep it simple. Bringing in dependencies can be discussed from many angles, and for this case, I chose not to use any. 
+
+# Known Issues
+
+* Wikipedia's API may return not well-formed or invalid HTML, which is conditions (a bug, in fact) that propagate into our own API. It needs be documented, it could be a sensible design choice to pass it through the API
+
+* Error handling is currently not done.
+
+* More attention to the treading could be done, the default thread pool for instance.
+
+# Testing
+
+I've been on W3C's XQuery Test Task Force, and also hold an ISTQB certificate in testing.
+
+TODO
+
+# Topics
 
 * Relatively large images are served by the API. CAA has smaller, but that's not necessarily of interest. Here's missing in the spec. If it's supposed to be thumbnails in some UI, smaller images are useful. However, if it's to be viewed as on display on a dashboard, larger images are better, and those are served.
 

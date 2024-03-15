@@ -28,6 +28,9 @@ public class MBQueryReturn {
      *  https://www.wikidata.org/wiki/Q11649
      * <br>  
      * We extract and return: Q11649
+     *
+     * @return The ID used in Wikidata and Wikipedia for
+     * this artist/page. If none is found, an empty string is returned.
      */
     String getWikiID() {
         for (MBRelation relation  : relations) {
@@ -41,7 +44,7 @@ public class MBQueryReturn {
 
         }
 
-        return ""; // TODO error protocol
+        return "";
     }
     
     MBQueryReturn(@JsonProperty("release-groups") List<MBAlbum> release_groups,
