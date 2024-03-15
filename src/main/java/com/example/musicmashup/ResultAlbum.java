@@ -10,11 +10,14 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Represents an album by the requested artist.
+ * Represents an album by the requested artist, with the data
+ * needed for our return. MBAlbum represents the data returned from MusicBrainz.
+ * <br/>
+ * This is not a record because we're doing threading and need to modify a member variable.
  */
-public class ResultAlbum /*(String title, String mbid, String imageURL)*/ {
+public class ResultAlbum {
 
-    private String m_title;
+    final private String m_title;
 
     /**
      * The MBID of this album (release-group), not the artist.
@@ -57,37 +60,7 @@ public class ResultAlbum /*(String title, String mbid, String imageURL)*/ {
     ResultAlbum(String title, String mbid) {
         this.m_title = title;
         this.m_mbid = mbid;
-        //this.image = image;
     }
-    /**
-     * Converts from MusicBrainz return to what we need to return.
-     *
-     * @param albums The MusicBrainz data
-     * @return Representation of what we need to return
-     */
-    /*
-    static ArrayList<ResultAlbum>  from(List<MBAlbum> albums) {
-        // We set the initial size to improve performance.
-        ArrayList<ResultAlbum> retval = new ArrayList<>(albums.size());
-
-        List<CompletableFuture<Void>> completableFutures;
-        for (MBAlbum album : albums) {
-            final String imageUrl = "https://coverartarchive.org/release-group/"
-                                  + album.id()
-                                  + "/front.jpg";
-
-            ResultAlbum alb = new ResultAlbum(album.title(), album.id(), imageUrl);
-            retval.add(alb);
-
-           // CompletableFuture<Void> cf = CompletableFuture.supplyAsync(() -> {
-              //  alb.getImageURL();
-            });
-        }
-
-
-        return retval;
-    }
-*/
 
     static ArrayList<ResultAlbum>  from(List<MBAlbum> albums) {
         // We set the initial size to improve performance.
@@ -114,9 +87,8 @@ public class ResultAlbum /*(String title, String mbid, String imageURL)*/ {
     }
 
     /**
-     * Blocking function that retrieves the URL from Cover Art Archive and assigns it to our member variable.
+     * Blocking function that retrieves the URL from Cover Art Archive and assigns it to our member variable m_imageURL.
      */
-
     public void fetchImageURL() {
        final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -131,8 +103,6 @@ public class ResultAlbum /*(String title, String mbid, String imageURL)*/ {
         }
 
         System.out.println("FOO BAR");
-
-      //  URL imageURL = null;
 
         try {
             JsonNode rootNode = objectMapper.readValue(caaURL, JsonNode.class);
@@ -154,9 +124,6 @@ public class ResultAlbum /*(String title, String mbid, String imageURL)*/ {
 
         // We now have written to imageURL or not. If it's
        //  empty, no front cover was found.
-
-     //   final CompletableFuture<URL> completableFuture = new CompletableFuture<>(imageURL);
-        //return completableFuture;
     }
 
 
