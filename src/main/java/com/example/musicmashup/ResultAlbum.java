@@ -75,7 +75,7 @@ public class ResultAlbum {
             CompletableFuture<Void> job = CompletableFuture.runAsync(() -> {
                 System.out.println("will call fetchImageURL()");
                 resAlbum.fetchImageURL();
-                System.out.println("DONE will call fetchImageURL()");
+                System.out.println("DONE calling fetchImageURL()");
             });
 
             System.out.println("Adding to lists()");
@@ -106,7 +106,7 @@ public class ResultAlbum {
             return;
         }
 
-        System.out.println("FOO BAR");
+        System.out.println("fetchImageURL()");
 
         try {
             JsonNode rootNode = objectMapper.readValue(caaURL, JsonNode.class);
@@ -121,6 +121,9 @@ public class ResultAlbum {
                     break;
                 }
             }
+        }
+        catch (java.io.FileNotFoundException e) {
+            // No JSON for this album, we leave m_imageURL empty.
         }
         catch (Exception e) {
             e.printStackTrace();
