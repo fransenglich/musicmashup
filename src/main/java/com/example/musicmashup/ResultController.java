@@ -44,11 +44,10 @@ public class ResultController {
         RestTemplateBuilder builder = new RestTemplateBuilder();
         RestTemplate restTemplate = builder.build();
 
-
         MBQueryReturn mbReturn = restTemplate.getForObject(mbURL, MBQueryReturn.class);
 
         if (mbReturn == null)
-            return errorMessage(mbid, "MusicBrainz have entry for MBID " + mbid);
+            return errorMessage(mbid, "MusicBrainz doesn't have entry for MBID " + mbid);
 
         ArrayList<ResultAlbum> albums = ResultAlbum.from(mbReturn.albums);
 

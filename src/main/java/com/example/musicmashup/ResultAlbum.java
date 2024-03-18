@@ -65,21 +65,25 @@ public class ResultAlbum {
     static ArrayList<ResultAlbum>  from(List<MBAlbum> albums) {
         // We set the initial size to improve performance.
         ArrayList<ResultAlbum> retval = new ArrayList<>(albums.size());
+        System.out.println("from()");
 
         List<CompletableFuture<Void>> futures;
         futures = new ArrayList<>(albums.size());
 
         for (MBAlbum album : albums) {
             ResultAlbum resAlbum = new ResultAlbum(album.title(), album.id());
-            CompletableFuture<Void> job = CompletableFuture.supplyAsync(() -> {
+            CompletableFuture<Void> job = CompletableFuture.runAsync(() -> {
+                System.out.println("will call fetchImageURL()");
                 resAlbum.fetchImageURL();
-                return null;
+                System.out.println("DONE will call fetchImageURL()");
             });
 
+            System.out.println("Adding to lists()");
             futures.add(job);
             retval.add(resAlbum);
         }
 
+        System.out.println("futures.forEach()");
         // We block and wait for all our tasks (image URL per album) to finish.
         futures.forEach(CompletableFuture::join);
 
