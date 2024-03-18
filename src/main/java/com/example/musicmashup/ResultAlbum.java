@@ -70,13 +70,16 @@ public class ResultAlbum {
         List<CompletableFuture<Void>> futures;
         futures = new ArrayList<>(albums.size());
 
+       // ExecutorService executor = Executors.newFixedThreadPool(20);
+
         for (MBAlbum album : albums) {
             ResultAlbum resAlbum = new ResultAlbum(album.title(), album.id());
             CompletableFuture<Void> job = CompletableFuture.runAsync(() -> {
+                System.out.println("Running on thread:" + Thread.currentThread().getName());
                 System.out.println("will call fetchImageURL()");
                 resAlbum.fetchImageURL();
                 System.out.println("DONE calling fetchImageURL()");
-            });
+            }, MusicMashupApplication.caaExecutor);
 
             System.out.println("Adding to lists()");
             futures.add(job);

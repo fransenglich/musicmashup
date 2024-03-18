@@ -98,7 +98,6 @@ public class ResultController {
          */
         JsonNode rootNode = objectMapper.readValue(wdURL, JsonNode.class);
 
-        // TODO Error handling
         JsonNode entities = rootNode.get("entities");
         JsonNode entry = entities.get(wikiID);
         JsonNode sitelinks = entry.get("sitelinks");
@@ -122,8 +121,6 @@ public class ResultController {
         final ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readValue(wpURL, JsonNode.class);
 
-        // TODO Error handling
-      //  JsonNode entities = rootNode.get("entities");
         JsonNode query = rootNode.get("query");
         JsonNode pages = query.get("pages");
         JsonNode actualPage = pages.elements().next();

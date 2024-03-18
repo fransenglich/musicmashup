@@ -15,7 +15,7 @@ What catches my attention is this in the case description:
 
 I don't know if this is a "trick question", because the case can be solved without querying Cover Art Archive (CAA). That is, it's possible to construct links to the cover art images in CAA without querying the JSON, and the first version I wrote did exactly that.
 
-CAA doesn't have rate limits. One GET request per query is done to MusicBrainz, Wikidata and Wikipedia. 
+ALso, CAA doesn't have rate limits, according to documentation. One GET request per query is done to MusicBrainz, Wikidata and Wikipedia. 
 
 However, because of the case description above, it seems as if you wanted to write some form of parallelism, so I rewrote the code to asynchronously fetch the JSON from CAA and use it to construct the links in the response. However, this is of course massively slower (N GET requests for N albums, compared to 0 requests), but it does demonstrate a bit of asynchronous code. Hence, the current version is not the fastest, but is perhaps better at what the case is actually about: judging my coding skills.
 
@@ -23,21 +23,23 @@ It should be noticed that much can't be parallelized in the case. Our REST retur
 
 The mashup service is not computationally expensive, because we're not using CPU cycles ourselves on anything heavy, and we mostly run in efficiently coded libraries, the marshalling done by Jackson and so on. What do consume *time* is waiting for the returns from the various services.
 
-I chose to do it in a simple manner, Java 8's CompletableFuture, essentially. However, there are many modern libraries out there for threading/async (such as EA Async), and I chose to keep it simple. Bringing in dependencies can be discussed from many angles, and for this case, I chose not to use any. 
+I chose to do it in a simple but yet performant manner, Java 8's CompletableFuture with a pool, essentially. However, there are many modern libraries out there for threading/async (such as EA Async), and I chose to keep it simple. Bringing in dependencies can be discussed from many angles, and for this case, I chose not to use any. 
+
+As a C++ programmer on the large tool/API framework Qt, we've spent a lot of time on designing and writing thread-safe APIs and a luxury many modern solutions has: reentrant code. Getting better to know Java's approach will be interesting.
 
 # Known Issues
 
 * Wikipedia's API may return not well-formed or invalid HTML, which is conditions (a bug, in fact) that propagate into our own API. It needs be documented, it could be a sensible design choice to pass it through the API
 
-* Error handling is currently not done.
+* Error handling is currently generally not done.
 
-* More attention to the treading could be done, the default thread pool for instance.
+* More attention to threading, to put it in context with the framework at large. Currently, we assume we're the only runner.
 
 # Testing
 
 I've been on W3C's XQuery Test Task Force, and also hold an ISTQB certificate in testing.
 
-black/white
+TODO black/white
 
 # Topics
 
