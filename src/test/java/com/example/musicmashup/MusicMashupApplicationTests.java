@@ -61,11 +61,14 @@ class MusicMashupApplicationTests {
 
 		// Now, we compare the albums.
 
-		File jsonExpFile = new File("expNirvanaAlbums.json");
+		// Load our baseline.
+		String resourceName = "expNirvanaAlbums.json";
+		ClassLoader classLoader = getClass().getClassLoader();
+		File jsonExpFile = new File(classLoader.getResource(resourceName).getFile());
 		assertThat(jsonExpFile.exists());
 
+		// Convert the JSON file to Java instances
 		ObjectMapper objectMapper = new ObjectMapper();
-
 		TestExpJson topRoot = objectMapper.readValue(jsonExpFile, TestExpJson.class);
 
 		List<TestJsonReturnAlbum> expAlbums = Arrays.asList(topRoot.albums());
