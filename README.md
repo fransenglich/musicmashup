@@ -37,6 +37,8 @@ As a C++ programmer on the large tool/API framework Qt, we've spent a lot of tim
 
 # Testing
 
+  gradle test
+
 I've been on W3C's XQuery Test Task Force, and also hold an ISTQB certificate in testing.
 
 TODO black/white
