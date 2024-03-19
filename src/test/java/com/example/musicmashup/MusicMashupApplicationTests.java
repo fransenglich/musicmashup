@@ -43,6 +43,9 @@ class MusicMashupApplicationTests {
 
 	/**
 	 * A typical query, for Nirvana.
+	 *
+	 * We baseline the current return from MusicBrainz, meaning that if any
+	 * new album is released or a current is changed, this test will break.
 	 */
 	@Test
 	public void fetchNirvana() throws Exception {
@@ -84,6 +87,8 @@ class MusicMashupApplicationTests {
 		// We don't know if the order of albums from MusicBrainz is stable.
 		Collections.sort(expAlbums, comp);
 		Collections.sort(actAlbums, comp);
+
+		assertEquals(expAlbums.size(), actAlbums.size());
 
 		// This is simpler than turning the Java record into a class
 		for(int i = 0; i < expAlbums.size(); ++i) {
