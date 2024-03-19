@@ -28,7 +28,7 @@ public class ResultAlbum {
      * The URL to the front cover image. If it's empty, it's our way of signal that
      * no URL could be found.
      */
-    URL m_imageURL;
+    URL image;
 
     /**
      * Getter necessary for Jackson's marshalling.
@@ -47,8 +47,8 @@ public class ResultAlbum {
     /**
      * Getter necessary for Jackson's marshalling.
      */
-    public URL getImageURL () {
-        return m_imageURL;
+    public URL getImage() {
+        return image;
     }
 
     /**
@@ -120,7 +120,7 @@ public class ResultAlbum {
 
                 // We only want the front cover.
                 if (image.get("front").asBoolean()) {
-                    m_imageURL = new URL(image.get("image").textValue());
+                    this.image = new URL(image.get("image").textValue());
                     break;
                 }
             }
