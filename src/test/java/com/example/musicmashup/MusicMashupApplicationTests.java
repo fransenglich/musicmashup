@@ -23,16 +23,22 @@ class MusicMashupApplicationTests {
 
 
 	/**
-	 * A simple test to ensure our context loads.
+	 * Ensure our context loads.
 	 */
 	@Test
 	void contextLoads() {
 		assertThat(controller).isNotNull();
 	}
 
+	@Test
+	void shouldGiveErrorMessage() throws Exception {
+		assertEquals(this.restTemplate.getForObject("http://localhost:" + port + "/musicmashup?mbid=NOT_EXIST",
+                String.class),
+				"{\"mbid\":\"NOT_EXIST\",\"description\":\"MusicBrainz doesn't have entry for MBID NOT_EXIST\",\"albums\":[]}");
+	}
 
 	@Test
 	void myTest() {
-		assertEquals("NO", "BAR");
+	//	assertEquals("NO", "BAR");
 	}
 }

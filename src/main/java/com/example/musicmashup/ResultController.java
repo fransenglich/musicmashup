@@ -7,6 +7,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -43,8 +44,15 @@ public class ResultController {
 
         RestTemplateBuilder builder = new RestTemplateBuilder();
         RestTemplate restTemplate = builder.build();
+        MBQueryReturn mbReturn = null;
 
-        MBQueryReturn mbReturn = restTemplate.getForObject(mbURL, MBQueryReturn.class);
+        try {
+             mbReturn = restTemplate.getForObject(mbURL, MBQueryReturn.class);
+        }
+        catch(HttpClientErrorException e) {
+            return errorMessage(mbid, "MusicBrainz doesn't have entry for MBID " + mbid);
+        }
+
 
         if (mbReturn == null)
             return errorMessage(mbid, "MusicBrainz doesn't have entry for MBID " + mbid);
