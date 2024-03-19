@@ -1,5 +1,6 @@
 package com.example.musicmashup;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -10,8 +11,12 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.io.*;
+
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -54,24 +59,37 @@ class MusicMashupApplicationTests {
 		assertThat(json.description().contains("Nirvana"));
 		assertThat(json.description().contains("<p>"));
 
-		// Somewhat check the albums.
-		// We don't want to break if there's a new "best of"-album released.
-		List<TestJsonReturnAlbum> albums = Arrays.asList(json.albums());
+		// Now, we compare the albums.
 
-		boolean hasBleach = false;
+		File jsonExpFile = new File("expNirvanaAlbums.json");
+		assertThat(jsonExpFile.exists());
 
-		for (TestJsonReturnAlbum album : albums) {
-			if (album.title().equals ("Bleach")) {
-				assertEquals("f1afec0b-26dd-3db5-9aa1-c91229a74a24", album.mbid());
-				assertEquals("http://coverartarchive.org/release/7d166a44-cfb5-4b08-aacb-6863bbe677d6/1247101964.jpg", album.image());
-				hasBleach = true;
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		TestExpJson topRoot = objectMapper.readValue(jsonExpFile, TestExpJson.class);
+
+		List<TestJsonReturnAlbum> expAlbums = Arrays.asList(topRoot.albums());
+		List<TestJsonReturnAlbum> actAlbums = Arrays.asList(json.albums());
+
+		Comparator<TestJsonReturnAlbum> comp = new Comparator<TestJsonReturnAlbum>() {
+			@Override
+			public int compare (TestJsonReturnAlbum a, TestJsonReturnAlbum b) {
+				return a.mbid().compareTo(b.mbid());
 			}
+		};
+
+		// We don't know if the order of albums from MusicBrainz is stable.
+		Collections.sort(expAlbums, comp);
+		Collections.sort(actAlbums, comp);
+
+		// This is simpler than turning the Java record into a class
+		for(int i = 0; i < expAlbums.size(); ++i) {
+			TestJsonReturnAlbum a = expAlbums.get(i);
+			TestJsonReturnAlbum b = actAlbums.get(i);
+
+			assertEquals(a.mbid(), b.mbid());
+			assertEquals(a.title(), b.title());
+			assertEquals(a.image(), b.image());
 		}
-
-		assertThat(hasBleach);
-
-		// This way we won't break in the forseeable future.
-		assertThat(albums.size() >= 25);
-		assertThat(albums.size() < 30);
 	}
 }
