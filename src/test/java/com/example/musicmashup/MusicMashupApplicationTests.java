@@ -45,7 +45,8 @@ class MusicMashupApplicationTests {
 	 * A typical query, for Nirvana.
 	 *
 	 * We baseline the current return from MusicBrainz, meaning that if any
-	 * new album is released or a current is changed, this test will break.
+	 * new album is released or a current is changed, this test will break. A softer/"fussy" approach
+	 * could be done, such as checking only one album or so, but this is more rigid.
 	 */
 	@Test
 	public void fetchNirvana() throws Exception {
