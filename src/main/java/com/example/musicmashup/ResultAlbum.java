@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
 
 /**
  * Represents an album by the requested artist, with the data
@@ -75,11 +76,11 @@ public class ResultAlbum {
         for (MBAlbum album : albums) {
             ResultAlbum resAlbum = new ResultAlbum(album.title(), album.id());
             CompletableFuture<Void> job = CompletableFuture.runAsync(() -> {
-                System.out.println("Running on thread:" + Thread.currentThread().getName());
-                System.out.println("will call fetchImageURL()");
+           //     System.out.println("Running on thread:" + Thread.currentThread().getName());
+             //   System.out.println("will call fetchImageURL()");
                 resAlbum.fetchImageURL();
-                System.out.println("DONE calling fetchImageURL()");
-            }, MusicMashupApplication.caaExecutor);
+               // System.out.println("DONE calling fetchImageURL()");
+            }, Executors.newFixedThreadPool(20)); // MusicMashupApplication.caaExecutor);
 
             System.out.println("Adding to lists()");
             futures.add(job);

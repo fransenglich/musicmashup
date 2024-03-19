@@ -22,7 +22,7 @@ public class MusicMashupApplication {
 		 * queried artist has as number of albums.
 		 * .newCachedThreadPool() could be considered.
 		 */
-		caaExecutor = Executors.newFixedThreadPool(20);
+			caaExecutor = Executors.newFixedThreadPool(20);
 
 		SpringApplication.run(MusicMashupApplication.class, args);
 	}

@@ -53,11 +53,16 @@ public class ResultController {
             return errorMessage(mbid, "MusicBrainz doesn't have entry for MBID " + mbid);
         }
 
-
         if (mbReturn == null)
             return errorMessage(mbid, "MusicBrainz doesn't have entry for MBID " + mbid);
 
-        ArrayList<ResultAlbum> albums = ResultAlbum.from(mbReturn.albums);
+        ArrayList<ResultAlbum> albums = null;
+        try {
+            albums = ResultAlbum.from(mbReturn.albums);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
 
         /* Now we proceed to extract from Wikipedia. First the link from Wikidata,
          * then we fetch from Wikipedia. */
