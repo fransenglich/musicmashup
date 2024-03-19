@@ -47,6 +47,8 @@ TODO black/white
 
 * Relatively large images are served by the API. CAA has smaller, but that's not necessarily of interest. Here's missing in the spec. If it's supposed to be thumbnails in some UI, smaller images are useful. However, if it's to be viewed as on display on a dashboard, larger images are better, and those are served.
 
+* IntelliJ and Gradle give some warnings on my setup, but according to googling they should be harmless, although broken window theory applies.
+
 # How to Build & Run
 
 This service is a Spring Boot and Gradle application, built on Java 17. Hence, you can run it by:
