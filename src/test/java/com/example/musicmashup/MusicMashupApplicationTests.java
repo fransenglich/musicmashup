@@ -15,7 +15,7 @@ import org.springframework.web.client.RestClientException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest (webEnvironment = WebEnvironment.RANDOM_PORT)
 class MusicMashupApplicationTests {
 
 	@LocalServerPort
@@ -26,7 +26,6 @@ class MusicMashupApplicationTests {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
-
 
 	/**
 	 * Ensure our context loads.
@@ -47,7 +46,7 @@ class MusicMashupApplicationTests {
 	 * Check that invalid interface is handled.
 	 */
 	@Test
-	void shouldFail() throws Exception {
+	void invalidRequest() throws Exception {
 		TestRestTemplate testRestTemplate = new TestRestTemplate();
 		ResponseEntity<String> response = testRestTemplate.
 				getForEntity("http://localhost:" + port + "/musicmashup?WRONG_PARAM", String.class);
@@ -55,25 +54,29 @@ class MusicMashupApplicationTests {
 		Assertions.assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
 	}
 
-	public record TestJsonReturnAlbum (String title, String mbid, String image) {}
-
-	public record TestJsonReturn (String mbid, String description, TestJsonReturnAlbum[] albums) {}
-
 	/**
 	 * A success test.
 	 */
 	@Test
 	void fetchNirvana() throws Exception {
+		System.out.println("Port:" + port);
 		TestJsonReturn rv = this.restTemplate.getForObject("http://localhost:"
 						+ port
 						+ "/musicmashup?mbid=5b11f4ce-a62d-471e-81fc-a69a8278c7da",
 				TestJsonReturn.class);
 
-		assertEquals("5b11f4ce-a62d-471e-81fc-a69a8278c7da", rv.mbid);
+		String str =  this.restTemplate.getForObject("http://localhost:"
+						+ port
+						+ "/musicmashup?mbid=5b11f4ce-a62d-471e-81fc-a69a8278c7da",
+				String.class);
 
-		// Wikipedia might change, so we just check if it's non empty. It would be
+		assertEquals("5b11f4ce-a62d-471e-81fc-a69a8278c7da", str);
+
+		// Wikipedia might change, so we do some simple checks. It would be
 		// possible to pull in some library that can tell "this is likely HTML".
-		assertThat(!rv.description.isEmpty());
+		assertThat(!rv.description().isEmpty());
+		assertThat(rv.description().contains("Nirvana"));
+		assertThat(rv.description().contains("<p>"));
 
 	}
 }
