@@ -80,7 +80,7 @@ public class ResultAlbum {
              //   System.out.println("will call fetchImageURL()");
                 resAlbum.fetchImageURL();
                // System.out.println("DONE calling fetchImageURL()");
-            }, Executors.newFixedThreadPool(20)); // MusicMashupApplication.caaExecutor);
+            }, ResultController.caaExecutor);
 
             System.out.println("Adding to lists()");
             futures.add(job);

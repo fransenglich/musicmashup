@@ -9,14 +9,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+
 
 @RestController
 public class ResultController {
+    /**
+     * We use this pool for fetching from Cover Art Archive.
+     * We don't compute much, but we spend a lot of time waiting
+     * for HTTP, so a high count makes sense.
+     * Plenty of research can be spent on this constant, such as what the typically
+     * queried artist has as number of albums.
+     * .newCachedThreadPool() could be considered.
+     *
+     * Having this as a static variable can be questioned in a wider perspective.
+     */
+    public static ExecutorService caaExecutor = Executors.newFixedThreadPool(20);
 
     /**
      * Essentially a placeholder for error reporting.
@@ -56,13 +71,7 @@ public class ResultController {
         if (mbReturn == null)
             return errorMessage(mbid, "MusicBrainz doesn't have entry for MBID " + mbid);
 
-        ArrayList<ResultAlbum> albums = null;
-        try {
-            albums = ResultAlbum.from(mbReturn.albums);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+        ArrayList<ResultAlbum> albums = ResultAlbum.from(mbReturn.albums);
 
         /* Now we proceed to extract from Wikipedia. First the link from Wikidata,
          * then we fetch from Wikipedia. */
@@ -71,6 +80,7 @@ public class ResultController {
         try {
            wpURL = getLinkFromWikidata(mbReturn);
         } catch (Exception e) {
+            // TODO
         }
 
         String description = "";
