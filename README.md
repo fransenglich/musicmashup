@@ -33,7 +33,7 @@ As a C++ programmer on the large tool/API framework Qt, we've spent a lot of tim
 
 * Error handling is currently generally not done.
 
-* The edge case of Wikipedia being served directly, as opposed to via Wikidata, hasn't been detected.
+* The edge case of Wikipedia being served directly, as opposed to via Wikidata, hasn't been detected. 
 
 * More attention to threading, to put it in context with the framework at large. Currently, we assume we're the only runner.
 
