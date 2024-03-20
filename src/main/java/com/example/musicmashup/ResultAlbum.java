@@ -66,29 +66,20 @@ public class ResultAlbum {
     static ArrayList<ResultAlbum>  from(List<MBAlbum> albums) {
         // We set the initial size to improve performance.
         ArrayList<ResultAlbum> retval = new ArrayList<>(albums.size());
-        System.out.println("from()");
 
         List<CompletableFuture<Void>> futures;
         futures = new ArrayList<>(albums.size());
 
-       // ExecutorService executor = Executors.newFixedThreadPool(20);
-
         for (MBAlbum album : albums) {
             ResultAlbum resAlbum = new ResultAlbum(album.title(), album.id());
             CompletableFuture<Void> job = CompletableFuture.runAsync(() -> {
-           //     System.out.println("Running on thread:" + Thread.currentThread().getName());
-             //   System.out.println("will call fetchImageURL()");
                 resAlbum.fetchImageURL();
-               // System.out.println("DONE calling fetchImageURL()");
             }, ResultController.caaExecutor);
 
-            System.out.println("Adding to lists()");
             futures.add(job);
             retval.add(resAlbum);
         }
 
-        System.out.println("futures.forEach()");
-        // We block and wait for all our tasks (image URL per album) to finish.
         futures.forEach(CompletableFuture::join);
 
         return retval;
@@ -109,8 +100,6 @@ public class ResultAlbum {
         catch (Exception ignored) {
             return;
         }
-
-        System.out.println("fetchImageURL()");
 
         try {
             JsonNode rootNode = objectMapper.readValue(caaURL, JsonNode.class);
@@ -136,6 +125,4 @@ public class ResultAlbum {
         // We now have written to imageURL or not. If it's
        //  empty, no front cover was found.
     }
-
-
 }

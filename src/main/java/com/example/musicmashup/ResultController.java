@@ -127,7 +127,6 @@ public class ResultController {
         JsonNode enwiki = sitelinks.get("enwiki");
 
         final String artistLinkTitle = enwiki.get("title").textValue();
-        // TODO: Edge case: Sometimes MusicBrainz will refer to Wikipedia directly.
 
         return new URL("https://en.wikipedia.org/w/api.php?action=query" +
                        "&format=json&prop=extracts&exintro=true&redirects=true&titles=" +
