@@ -1,4 +1,4 @@
 package com.example.musicmashup;
 
-public record TestExpJson(TestJsonReturnAlbum[] albums) {
+public record TestExpJson(TestJsonAlbum[] albums) {
 }

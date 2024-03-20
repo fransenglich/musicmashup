@@ -78,12 +78,12 @@ class MusicMashupApplicationTests {
 		ObjectMapper objectMapper = new ObjectMapper();
 		TestExpJson topRoot = objectMapper.readValue(jsonExpFile, TestExpJson.class);
 
-		List<TestJsonReturnAlbum> expAlbums = Arrays.asList(topRoot.albums());
-		List<TestJsonReturnAlbum> actAlbums = Arrays.asList(json.albums());
+		List<TestJsonAlbum> expAlbums = Arrays.asList(topRoot.albums());
+		List<TestJsonAlbum> actAlbums = Arrays.asList(json.albums());
 
-		Comparator<TestJsonReturnAlbum> comp = new Comparator<TestJsonReturnAlbum>() {
+		Comparator<TestJsonAlbum> comp = new Comparator<TestJsonAlbum>() {
 			@Override
-			public int compare (TestJsonReturnAlbum a, TestJsonReturnAlbum b) {
+			public int compare (TestJsonAlbum a, TestJsonAlbum b) {
 				return a.mbid().compareTo(b.mbid());
 			}
 		};
@@ -96,8 +96,8 @@ class MusicMashupApplicationTests {
 
 		// This is simpler than turning the Java record into a class
 		for(int i = 0; i < expAlbums.size(); ++i) {
-			TestJsonReturnAlbum a = expAlbums.get(i);
-			TestJsonReturnAlbum b = actAlbums.get(i);
+			TestJsonAlbum a = expAlbums.get(i);
+			TestJsonAlbum b = actAlbums.get(i);
 
 			assertEquals(a.mbid(), b.mbid());
 			assertEquals(a.title(), b.title());
