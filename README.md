@@ -84,6 +84,7 @@ or Zara Larsson:
   - Decision Table Testing
   - State Transition Testing
 
-Concretely:
-  - More testing of non-ASCII/Unicode
-  - More testing of error handling.
+Concretely, testing of:
+  - non-ASCII/Unicode
+  - Error handling.
+  - Robustness/performance/response time/stress testing
