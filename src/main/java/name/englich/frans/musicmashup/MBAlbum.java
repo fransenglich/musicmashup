@@ -1,4 +1,4 @@
-package com.example.musicmashup;
+package name.englich.frans.musicmashup;
 
 /**
  * The album return from Music Brainz (MB). This is not what we return, however.

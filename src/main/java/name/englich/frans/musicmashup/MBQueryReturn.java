@@ -1,4 +1,4 @@
-package com.example.musicmashup;
+package name.englich.frans.musicmashup;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;

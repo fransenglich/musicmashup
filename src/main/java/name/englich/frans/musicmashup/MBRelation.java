@@ -1,4 +1,4 @@
-package com.example.musicmashup;
+package name.englich.frans.musicmashup;
 
 /**
  * Represents MusicBrainz's JSON.

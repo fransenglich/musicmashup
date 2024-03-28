@@ -1,4 +1,4 @@
-package com.example.musicmashup;
+package name.englich.frans.musicmashup;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

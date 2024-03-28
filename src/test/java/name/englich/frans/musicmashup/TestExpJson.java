@@ -1,4 +1,4 @@
-package com.example.musicmashup;
+package name.englich.frans.musicmashup;
 
 public record TestExpJson(TestJsonAlbum[] albums) {
 }
