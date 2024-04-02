@@ -56,7 +56,7 @@ class MusicMashupApplicationTests {
 		ResponseEntity<TestJsonReturn> response = template.getForEntity("/musicmashup?mbid=5b11f4ce-a62d-471e-81fc-a69a8278c7da", TestJsonReturn.class);
 		TestJsonReturn json = response.getBody();
 
-		// Check the mbid
+		// Check the mbid of Nirvana.
 		assertEquals("5b11f4ce-a62d-471e-81fc-a69a8278c7da", json.mbid());
 
 		// Check the description
@@ -99,9 +99,9 @@ class MusicMashupApplicationTests {
 			TestJsonAlbum a = expAlbums.get(i);
 			TestJsonAlbum b = actAlbums.get(i);
 
-			assertEquals(a.mbid(), b.mbid());
 			assertEquals(a.title(), b.title());
 			assertEquals(a.image(), b.image());
+			assertEquals(a.mbid(), b.mbid());
 		}
 	}
 }
