@@ -62,6 +62,13 @@ public class ResultAlbum {
         this.m_mbid = mbid;
     }
 
+    /**
+     * Converts the list of MusicBrainz's artists to the format we use
+     * in our JSON return.
+     *
+     * @param albums The MusicBrainz's artists.
+     * @return The result we return from our web service
+     */
     static ArrayList<ResultAlbum>  from(List<MBAlbum> albums) {
         // We set the initial size to improve performance.
         ArrayList<ResultAlbum> retval = new ArrayList<>(albums.size());

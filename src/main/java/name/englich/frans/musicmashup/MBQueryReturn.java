@@ -9,10 +9,10 @@ import java.util.List;
 
 /**
  * Mirrors the JSON from MusicBrainz (MB).
- * <br>
+ * <br/>
  * To study, GET the JSON and look at the output. All these small
  * records mirror the return, so no ingenious crafting of them.
- * <br>
+ * <br/>
  * This is a class and not a record because we need a custom JsonProperty.
  */
 public class MBQueryReturn {

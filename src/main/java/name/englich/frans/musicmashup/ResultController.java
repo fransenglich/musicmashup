@@ -18,6 +18,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 
+/**
+ * The main entry for our web service.
+ */
 @RestController
 public class ResultController {
     /**
