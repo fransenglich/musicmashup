@@ -99,6 +99,7 @@ class MusicMashupApplicationTests {
 			TestJsonAlbum a = expAlbums.get(i);
 			TestJsonAlbum b = actAlbums.get(i);
 
+		//	We can do assertEquals(a, b), but better reporting this way.
 			assertEquals(a.title(), b.title());
 			assertEquals(a.image(), b.image());
 			assertEquals(a.mbid(), b.mbid());
