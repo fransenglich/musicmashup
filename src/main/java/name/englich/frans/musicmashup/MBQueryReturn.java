@@ -41,7 +41,6 @@ public class MBQueryReturn {
                final String substring = res.substring(last + 1, res.length());
                return substring;
            }
-
         }
 
         return "";

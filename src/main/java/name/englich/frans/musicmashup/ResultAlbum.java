@@ -78,6 +78,9 @@ public class ResultAlbum {
 
         for (MBAlbum album : albums) {
             ResultAlbum resAlbum = new ResultAlbum(album.title(), album.id());
+
+            // We use runAsync(): it starts instantly and fetchImageURL() writes to
+            // its own object.
             CompletableFuture<Void> job = CompletableFuture.runAsync(() -> {
                 resAlbum.fetchImageURL();
             }, ResultController.caaExecutor);
@@ -86,6 +89,8 @@ public class ResultAlbum {
             retval.add(resAlbum);
         }
 
+        // The futures are running, and we wait on each. When we've waited to the end
+        // of the list, we know all have completed.
         futures.forEach(CompletableFuture::join);
 
         return retval;

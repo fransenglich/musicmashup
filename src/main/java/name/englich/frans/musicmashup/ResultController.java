@@ -16,7 +16,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
 
 /**
  * The main entry for our web service.

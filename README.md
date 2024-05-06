@@ -27,7 +27,7 @@ I chose to do it in a simple but yet performant manner, Java 8's CompletableFutu
 
 As a C++ programmer on the large tool/API framework Qt, we've spent a lot of time on designing and writing thread-safe APIs and a luxury many modern solutions has: reentrant code. Getting better to know Java's approach will be interesting.
 
-# Known Issues
+# Known and Possible Issues
 
 * Wikipedia's API may return not well-formed or invalid HTML, which is conditions (a bug, in fact) that propagate into our own API. It needs be documented, it could be a sensible design choice to pass it through the API
 
@@ -36,6 +36,8 @@ As a C++ programmer on the large tool/API framework Qt, we've spent a lot of tim
 * The edge case of Wikipedia being served directly, as opposed to via Wikidata, hasn't been detected. 
 
 * More attention to threading, to put it in context with the framework at large. Currently, we assume we're the only runner.
+
+* Might be a problem with encoding of non-ASCII.
 
 # Testing
 
