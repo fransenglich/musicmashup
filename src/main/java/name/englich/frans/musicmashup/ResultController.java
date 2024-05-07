@@ -38,7 +38,7 @@ public class ResultController {
      * Essentially a placeholder for error reporting.
      */
     OurQueryResult errorMessage(String mbid, String message) {
-        return new OurQueryResult(mbid, message, new ArrayList<ResultAlbum>());
+        return new OurQueryResult(mbid, message, new ArrayList<>());
     }
 
     /**
@@ -60,7 +60,7 @@ public class ResultController {
 
         RestTemplateBuilder builder = new RestTemplateBuilder();
         RestTemplate restTemplate = builder.build();
-        MBQueryReturn mbReturn = null;
+        MBQueryReturn mbReturn;
 
         try {
              mbReturn = restTemplate.getForObject(mbURL, MBQueryReturn.class);

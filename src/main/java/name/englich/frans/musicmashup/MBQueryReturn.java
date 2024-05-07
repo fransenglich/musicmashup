@@ -38,8 +38,7 @@ public class MBQueryReturn {
                final String res = relation.url().resource();
                final int last = res.lastIndexOf("/");
 
-               final String substring = res.substring(last + 1, res.length());
-               return substring;
+               return res.substring(last + 1, res.length());
            }
         }
 

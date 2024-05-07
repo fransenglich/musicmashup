@@ -27,7 +27,7 @@ class MusicMashupApplicationTests {
 	private TestRestTemplate template;
 
 	@Test
-	void shouldGiveErrorMessage() throws Exception {
+	void shouldGiveErrorMessage() {
 		assertEquals("{\"mbid\":\"NOT_EXIST\",\"description\":\"MusicBrainz doesn't have entry for MBID NOT_EXIST\",\"albums\":[]}",
 				this.template.getForEntity("/musicmashup?mbid=NOT_EXIST", String.class).getBody());
 	}
@@ -36,18 +36,16 @@ class MusicMashupApplicationTests {
 	 * Check that invalid interface is handled.
 	 */
 	@Test
-	void invalidRequest() throws Exception {
+	void invalidRequest() {
 		ResponseEntity<String> response = template.getForEntity("/musicmashup?WRONG_PARAM", String.class);
 		Assertions.assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
 	}
 
 	/**
 	 * A typical query, for Nirvana.
-	 *
 	 * We baseline the current return from MusicBrainz, meaning that if any
 	 * new album is released or a current is changed, this test will break. A softer/"fussy" approach
 	 * could be done, such as checking only one album or so, but this is more rigid.
-	 *
 	 * We cannot assume the order of albums is stable, and we don't add that property to our API, so
 	 * the testing is made more complex.
 	 */
@@ -81,12 +79,7 @@ class MusicMashupApplicationTests {
 		List<TestJsonAlbum> expAlbums = Arrays.asList(topRoot.albums());
 		List<TestJsonAlbum> actAlbums = Arrays.asList(json.albums());
 
-		Comparator<TestJsonAlbum> comp = new Comparator<TestJsonAlbum>() {
-			@Override
-			public int compare (TestJsonAlbum a, TestJsonAlbum b) {
-				return a.mbid().compareTo(b.mbid());
-			}
-		};
+		Comparator<TestJsonAlbum> comp = (TestJsonAlbum a, TestJsonAlbum b)->a.mbid().compareTo(b.mbid());
 
 		// We don't know if the order of albums from MusicBrainz is stable.
 		Collections.sort(expAlbums, comp);
